@@ -1,4 +1,4 @@
-import e from "express";
+
 import conexion from "../config/db.js";
 import jwt  from 'jsonwebtoken';
 
@@ -12,16 +12,20 @@ const expired = process.env.EXP_TOKEN | '1h';
         if(username === password){
             const consultaSql = "select * from personal where dniPersonal = ?";
             const [data] = await conexion.query(consultaSql,[username]);
-            const rolPersonal =data[0].rolPersonal;
+            const rolPersonal = data[0]['rolPersonal'];
             if(rolPersonal === "DIRECTOR" || rolPersonal === "ADMINISTRADOR"){
-                const token = jwt.sign({id:data[0].nomPersonal},secret,{expiresIn:expired});
+                const token = jwt.sign({id:data[0].nomPersonal},'c1gpH4CXS460beN28skBV6zSR0Gf57raqM2SZwAP5xM=',{expiresIn:'1h'});
                 return  res.json({token,status:true}); 
             } else{
                 return  res.json({status:false}).status(404);
             }
+            
+
         }else{
             return  res.json({status:false}).status(404);
+
         }
+     
     } catch (error) {
         res.json({message:error.message});
     }
