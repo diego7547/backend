@@ -27,6 +27,7 @@ export const registro = async (req, res) => {
         const statusHorarioLaboral = await verificarJornadaLaboral(dniPersonal);
         // comprobar si el personal no registro su asistencia de entrada
         const statusRegistro = await verificarRegistroPersonal(dniPersonal);
+        const statusSalida = await verificarSalidaPersonal(dniPersonal);
         // fecha actual - zona horaria lima/peru
         
         // Obtener la fecha actual en la zona horaria deseada
@@ -58,12 +59,17 @@ export const registro = async (req, res) => {
         
         if (statusPersonal.status) {
             if (statusHorarioLaboral.status) {
-                if(!statusRegistro.status){
-                    const sql = "insert into registro (	fcRegistro,hdeRegistro,estRegistro,dniPersonal ,hdtRegistro,hdsRegistro,obsRegistro) values(?,?,?,?,?,?,?)";
-                   await conexion.query(sql,[fechaActual,tiempoActual,'PRESENTE',dniPersonal,tiempoDeTardanza,'00:00:00',''])
-                    res.json({status:true, data: 'Registro de entrada existodo !!! ' })
+                if(!statusSalida.status){
+                    if(!statusRegistro.status){
+                        const sql = "insert into registro (	fcRegistro,hdeRegistro,estRegistro,dniPersonal ,hdtRegistro,hdsRegistro,obsRegistro) values(?,?,?,?,?,?,?)";
+                       await conexion.query(sql,[fechaActual,tiempoActual,'PRESENTE',dniPersonal,tiempoDeTardanza,'00:00:00',''])
+                        res.json({status:true, data: 'Registro de entrada existodo !!! ' })
+                    }else{
+                        res.json({ data: 'No puede registrar su asistencia de entrada nuevamente', status: false }).status(404)
+                    }
                 }else{
-                    res.json({ data: 'No puede registrar su asistencia de entrada nuevamente', status: false }).status(404)
+                    res.json({ data: 'Actualmente ya se encuentra registrado', status: false }).status(404)
+
                 }
             } else {
                 res.json({ data: 'Actualmente no tiene un horario establecido', status: false }).status(404)
