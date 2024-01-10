@@ -5,11 +5,11 @@ dotenv.config();
 
 const conexion = createPool(
     {
-        host:process.env.HOST,
-        port:process.env.PORTDB,
-        user:process.env.USERDB,
-        password:process.env.PASSWORD,
-        database:process.env.DB,
+        host:"bisy3vus6cp8hqicxxv5-mysql.services.clever-cloud.com",
+        port:"3306",
+        user:"u7exgb84kaqt9ci0",
+        password:"vEhnK7T9KQSfshRffF2E",
+        database:"bisy3vus6cp8hqicxxv5",
         
     }
 );

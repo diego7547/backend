@@ -19,13 +19,9 @@ const expired = process.env.EXP_TOKEN | '1h';
             } else{
                 return  res.json({status:false}).status(404);
             }
-            
-
         }else{
             return  res.json({status:false}).status(404);
-
         }
-     
     } catch (error) {
         res.json({message:error.message});
     }
