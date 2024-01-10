@@ -2,8 +2,8 @@ import e from "express";
 import conexion from "../config/db.js";
 import jwt  from 'jsonwebtoken';
 
-const secret = process.env.KEY_TOKEN;
-const expired = process.env.EXP_TOKEN;
+const secret = process.env.KEY_TOKEN | 'c1gpH4CXS460beN28skBV6zSR0Gf57raqM2SZwAP5xM=';
+const expired = process.env.EXP_TOKEN | '1h';
 
 
  export const login = async (req,res)=>{
