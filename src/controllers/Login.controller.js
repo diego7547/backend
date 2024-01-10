@@ -13,7 +13,7 @@ const expired = process.env.EXP_TOKEN;
             const consultaSql = "select * from personal where dniPersonal = ?";
             const [data] = await conexion.query(consultaSql,[username]);
             const rolPersonal =data[0].rolPersonal;
-            if(rolPersonal === "DIRECTOR" || rolPersonal === "ADMINISTRACION"){
+            if(rolPersonal === "DIRECTOR" || rolPersonal === "ADMINISTRADOR"){
                 const token = jwt.sign({id:data[0].nomPersonal},secret,{expiresIn:expired});
                 return  res.json({token,status:true}); 
             } else{
