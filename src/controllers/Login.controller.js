@@ -38,7 +38,7 @@ export const verificarToken = (req,res)=>{
      if(!token){
             return res.json({status:false}).status(404);
         }
-     const payload = jwt.verify(token,secret);
+     const payload = jwt.verify(token,"c1gpH4CXS460beN28skBV6zSR0Gf57raqM2SZwAP5xM=");
      const expiracion = payload.exp * 1000 ;
     if(Date.now() > expiracion) return res.json({status:false}).status(404);
      return   res.json({status:true});
