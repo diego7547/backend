@@ -63,7 +63,7 @@ export const registro = async (req, res) => {
                     if(!statusRegistro.status){
                         const sql = "insert into registro (	fcRegistro,hdeRegistro,estRegistro,dniPersonal ,hdtRegistro,hdsRegistro,obsRegistro) values(?,?,?,?,?,?,?)";
                        await conexion.query(sql,[fechaActual,tiempoActual,'PRESENTE',dniPersonal,tiempoDeTardanza,'00:00:00',''])
-                        res.json({status:true, data: 'Registro de entrada existodo !!! ' })
+                        res.json({status:true, data: 'Registro de entrada exitosamente !!! ' })
                     }else{
                         res.json({ data: 'No puede registrar su asistencia de entrada nuevamente', status: false }).status(404)
                     }
@@ -109,7 +109,7 @@ export const finalizar = async (req, res) => {
                     if(statusRegistro.status){
                         const consultaSql = "update registro set hdsRegistro = ? ,estRegistro = ? where dniPersonal = ? and  fcRegistro = ?";
                         await conexion.query(consultaSql,[tiempoActual,'FINALIZO',dniPersonal,fechaActual]);
-                        res.json({ data: 'Registro de salida existodo !!!', status: true })
+                        res.json({ data: 'Registro de salida exitosamente !!!', status: true })
                     }else{
                         res.json({ data: 'Debe de registrar su asistencia de entrada', status: false }).status(404)
 
