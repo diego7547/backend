@@ -58,6 +58,7 @@ export const registro = async (req, res) => {
         
         
         if (statusPersonal.status) {
+            
             if (statusHorarioLaboral.status) {
                 if(!statusSalida.status){
                     if(!statusRegistro.status){
@@ -172,6 +173,7 @@ const verificarJornadaLaboral = async (dniPersonal) => {
         const zonaHorariaDeseada = "America/Lima";
         const diaActual = moment().format('dddd');
         dia = diasSemana[diaActual];
+        
         const consultaSql = "select * from horario_laboral where dniPersonal = ? and dsHorario = ? ";
         const [data] = await conexion.query(consultaSql, [dniPersonal, dia]);
         if (data[0]) return { status: true, time: data[0]['hdiHorario'] }
